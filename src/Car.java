@@ -3,7 +3,7 @@ import java.awt.*;
  * Created by Agnes Rosendal, William Nordgren and Erik Andersson on 2020-11-11.
  */
 
-public abstract class Car implements Movable {
+public abstract class Car implements Movable,ICar {
     private int nrDoors;
     private double enginePower;
     private Color color;
@@ -83,14 +83,14 @@ public abstract class Car implements Movable {
      */
     public void move() {
         if (dir == NORTH)
-            pos[1] += currentSpeed;
+            this.setPos(new double[]{getPos()[0],getPos()[1]+this.getCurrentSpeed()});
         else if (dir == EAST)
-            pos[0] += currentSpeed;
+            this.setPos(new double[]{getPos()[0]+this.getCurrentSpeed(),getPos()[1]});
         else if (dir == SOUTH)
-            pos[1] -= currentSpeed;
+            this.setPos(new double[]{getPos()[0],getPos()[1]-this.getCurrentSpeed()});
         else
-            pos[0] -= currentSpeed;
-    } //kan göra om så den löper igenom en array (av riktningarna) eller
+            this.setPos(new double[]{getPos()[0]-this.getCurrentSpeed(),getPos()[1]});
+    }
 
     @Override
     public void turnLeft() {
@@ -123,13 +123,10 @@ public abstract class Car implements Movable {
             decrementSpeed(amount);
         System.out.println("Mata in ett värde mellan 0 och 1");
     }
-
-
     /**
      * If adding a new model that extends from Car you must have a speedFactor method.
      * @return
      */
-
     public abstract double speedFactor();
 
     public void incrementSpeed(double amount){
@@ -143,11 +140,15 @@ public abstract class Car implements Movable {
     public double [] getPos(){
         return this.pos;
     }
+
+    public void setPos(double [] newPos){
+        this.pos=newPos;
+    }
+    public String getModelName(){
+        return this.modelName;
+    }
+    public void writePos(){
+        System.out.println("("+ pos[0]+","+pos[1]+")");
+    }
+
 }
-
-
-//metoder för get,set bör vara public för att kunna kallas på utanför klassen?
-
-//instansvariabler bör vara private så de ej kan  ändras utifrån?
-
-//interfaces/specifikationosarv bäst?

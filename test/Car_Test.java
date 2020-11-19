@@ -25,7 +25,7 @@ public class Car_Test {
     }
     @Test
     public void testMove(){
-        double[] position={0,0};
+        double[] position= car.getPos();
         car.setCurrentSpeed(1.4);
         car.move();
         assert(car.getPos()!=position);
