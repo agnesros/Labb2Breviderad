@@ -7,7 +7,7 @@ public class CarTransport_Test {
     Volvo240 volvo;
     @Before
     public void init(){
-        cartransport=new CarTransport();
+        cartransport=new CarTransport(10);
         saab=new Saab95();
         volvo=new Volvo240();
         cartransport.lowerFlak();
