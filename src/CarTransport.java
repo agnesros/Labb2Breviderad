@@ -2,14 +2,16 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 public class CarTransport <A extends Car> extends Car implements Loadable<A>{
-    private List  <A>  carsOnTransport=new ArrayList<>(10);
+    private int maxCars;
+    private List  <A>  carsOnTransport=new ArrayList<>(maxCars);
     private boolean rampUp=true;
 
     /**
      * Inherits constructor from superclass.
      */
-    public CarTransport() {
+    public CarTransport(int maxCars) {
         super(2, Color.GRAY, 150, "Car Transport");
+        this.maxCars=maxCars;
     }
 
     public double speedFactor(){
@@ -87,10 +89,14 @@ public class CarTransport <A extends Car> extends Car implements Loadable<A>{
         return carsOnTransport.contains(car);
     }
 
+    public List<A> getCarList(){
+        return carsOnTransport;
+    }
+
     public static void main (String[] args){
         Volvo240 volvo=new Volvo240();
         Saab95 saab=new Saab95();
-        CarTransport test1=new CarTransport<>();
+        CarTransport test1=new CarTransport<>(10);
         test1.setCurrentSpeed(0);
         test1.lowerFlak();
         test1.loadCars(saab);
