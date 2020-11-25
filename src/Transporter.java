@@ -89,7 +89,7 @@ public abstract class Transporter<A extends Car> extends Vehicle implements Load
         nr1.lowerFlak();
         nr1.loadCars(volvo);
         System.out.println(""+nr1.getCarList());
-
     }
+
 }
 

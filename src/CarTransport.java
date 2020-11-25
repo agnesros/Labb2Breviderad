@@ -3,7 +3,7 @@ import kotlin.OverloadResolutionByLambdaReturnType;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-public class CarTransport <A extends Car> extends Transporter{
+public class CarTransport <A extends Car> extends Transporter<A>{
 
 
     /**
@@ -27,7 +27,7 @@ public class CarTransport <A extends Car> extends Transporter{
             for (int i=1; i<=Math.min(nrCars, size); i++){
                Car unloadedCar = this.getCarList().get(size - i);
                 this.getCarList().remove(size-i);
- //               System.out.println(unloadedCar.getModelName()+" has been unloaded.");
+                System.out.println(unloadedCar.getModelName()+" has been unloaded.");
             }
         } else
             System.out.println("Du kan inte lasta ur bilar medan du kör! Stanna motorn och sänk rampen");
