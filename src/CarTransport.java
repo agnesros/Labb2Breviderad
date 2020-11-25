@@ -1,58 +1,16 @@
+import kotlin.OverloadResolutionByLambdaReturnType;
+
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-public class CarTransport <A extends Car> extends Car implements Loadable<A>{
-    private int maxCars;
-    private List  <A>  carsOnTransport=new ArrayList<>(maxCars);
-    private boolean rampUp=true;
+public class CarTransport <A extends Car> extends Transporter{
+
 
     /**
      * Inherits constructor from superclass.
      */
     public CarTransport(int maxCars) {
-        super(2, Color.GRAY, 150, "Car Transport");
-        this.maxCars=maxCars;
-    }
-
-    public double speedFactor(){
-        return this.getEnginePower()*0.01;
-    }
-
-    public void liftFlak() {
-        rampUp=true;
-    }
-
-    public void lowerFlak(){
-        if(this.getCurrentSpeed()==0)
-        rampUp=false;
-    }
-
-    /**
-     *
-     * @param car is the car we want to compare it's position in relation to the cartransport.
-     * @return true if the car is close, otherwise false.
-     */
-    public boolean isClose(A car){
-        if(Math.abs(this.getPos()[0]-car.getPos()[0])<=3&&Math.abs(this.getPos()[1]-car.getPos()[1])<=3)
-            return true;
-        return false;
-    }
-
-    /**
-     *
-     * @param aCar is the car we'd like to load onto the cartransport. The method will make sure it's close and that the ramp is lowered.
-     * If the cartransport is full or if the cartransport tries to laod itself we will receive a notification error.
-     */
-    public void loadCars (A aCar){
-        if(!aCar.equals(this)) {
-            if (isClose(aCar) && !rampUp) {
-                carsOnTransport.add(aCar);
-                aCar.setPos(this.getPos());
-                System.out.println(aCar.getModelName() + "has been loaded.");
-            }
-        }
-        else
-            System.out.println("Fel!");
+        super(2,150, Color.GRAY, "Car Transport", 10);
     }
 
     /**
@@ -61,38 +19,22 @@ public class CarTransport <A extends Car> extends Car implements Loadable<A>{
      *               Will only be able to unload cars when standing still and the flak is lowered.
      *               It will follow the principle "last in, first out".
      */
+
+    @Override
     public void unloadCars (int nrCars){
-        if(!rampUp) {
-            int size=carsOnTransport.size();
+        if(!this.isRampUp()) {
+            int size=getCarList().size();
             for (int i=1; i<=Math.min(nrCars, size); i++){
-                Car unloadedCar= carsOnTransport.get(size-i);
-                carsOnTransport.remove(size-i);
-                System.out.println(unloadedCar.getModelName()+" has been unloaded.");
+               Car unloadedCar = this.getCarList().get(size - i);
+                this.getCarList().remove(size-i);
+ //               System.out.println(unloadedCar.getModelName()+" has been unloaded.");
             }
-        }
-        else
+        } else
             System.out.println("Du kan inte lasta ur bilar medan du kör! Stanna motorn och sänk rampen");
     }
 
-    /**
-     * In addition to the superclass's move method, this method will also make  sure the ramp is up and that the cars loaded will change their positions.
-     */
-    @Override
-    public void move(){
-        rampUp=true;
-        super.move();
-        for(A e: carsOnTransport){
-            e.setPos(this.getPos());
-        }
-    }
-    public boolean contain(A car){
-        return carsOnTransport.contains(car);
-    }
 
-    public List<A> getCarList(){
-        return carsOnTransport;
-    }
-
+/*
     public static void main (String[] args){
         Volvo240 volvo=new Volvo240();
         Saab95 saab=new Saab95();
@@ -102,9 +44,11 @@ public class CarTransport <A extends Car> extends Car implements Loadable<A>{
         test1.loadCars(saab);
          System.out.println(volvo.getPos().toString());  
         test1.loadCars(volvo);
-        test1.loadCars(test1);
+        //test1.loadCars(test1);
         test1.unloadCars(2);
 
     }
+
+ */
 
 }

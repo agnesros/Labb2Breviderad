@@ -3,7 +3,7 @@ import java.util.List;
 
 public class Garage <A extends Car> implements Loadable <A>{
     private int maxCars;
-    private List <A> carsInService=new ArrayList<A>(maxCars);
+    private List <A> carsInService=new ArrayList<>(10);
 
     public Garage(int maxCars){
         this.maxCars=maxCars;

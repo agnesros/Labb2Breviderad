@@ -1,10 +1,10 @@
 import java.awt.*;
 
-public class Scania extends Car {
+public class Scania extends Vehicle {
     private double flakAngle=0;
     private double currentSpeed; //fungerar detta?
     public Scania(){
-        super(4, Color.blue,150,"Scania");
+        super(4, 150 ,Color.blue,"Scania");
     }
 
     /**
