@@ -39,7 +39,6 @@ public abstract class Vehicle implements Movable{
     public void setCurrentSpeed(double newSpeed) {
         if (newSpeed <= enginePower && newSpeed >= 0)
             currentSpeed = newSpeed;
-        System.out.println("Mata in ett värde emellan 0 och motorkraft!");
     }
 
     public void stopEngine() { currentSpeed = 0; }
@@ -62,11 +61,11 @@ public abstract class Vehicle implements Movable{
      */
     public void move() {
         if (dir == NORTH)
-            this.setPos(new double[]{getPos()[0],getPos()[1]+this.getCurrentSpeed()});
+            this.setPos(new double[]{getPos()[0],getPos()[1]-this.getCurrentSpeed()});
         else if (dir == EAST)
             this.setPos(new double[]{getPos()[0]+this.getCurrentSpeed(),getPos()[1]});
         else if (dir == SOUTH)
-            this.setPos(new double[]{getPos()[0],getPos()[1]-this.getCurrentSpeed()});
+            this.setPos(new double[]{getPos()[0],getPos()[1]+this.getCurrentSpeed()});
         else
             this.setPos(new double[]{getPos()[0]-this.getCurrentSpeed(),getPos()[1]});
     }
@@ -84,15 +83,17 @@ public abstract class Vehicle implements Movable{
     private boolean validAmount(double amount) { return (amount >= 0 && amount <= 1); }
 
     public void gas(double amount) {
-        if (validAmount(amount))
+        if (validAmount(amount)) {
             incrementSpeed(amount);
-        System.out.println("Mata in ett värde mellan 0 och 1");
+            this.move();
+        }
     } //Kommer gå till resp. incrementSpeed beroende på vilken biltyp
 
     public void brake(double amount) {
-        if (validAmount(amount))
+        if (validAmount(amount)){
             decrementSpeed(amount);
-        System.out.println("Mata in ett värde mellan 0 och 1");
+            this.move();
+        }
     }
     /**
      * If adding a new model that extends from Car you must have a speedFactor method.
@@ -110,11 +111,26 @@ public abstract class Vehicle implements Movable{
 
     public double [] getPos(){ return this.pos; }
 
+    public double getX(){
+        return this.getPos()[0];
+    }
+    public double getY(){
+        return this.getPos()[1];
+    }
+
     public void setPos(double [] newPos){ this.pos=newPos; }
 
     public String getModelName(){ return this.modelName; }
 
     public void writePos(){ System.out.println("("+ pos[0]+","+pos[1]+")"); }
+
+    /*
+    private double[] nextPosition(){
+        double[] nextPos = new double[2];
+        nextPos[0] = this.getX()+this.getCurrentSpeed();
+        nextPos[1] = this.getY()+this.getCurrentSpeed();
+        return nextPos;
+    }*/
 
 }
 

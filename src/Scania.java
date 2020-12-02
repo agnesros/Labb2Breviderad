@@ -1,10 +1,9 @@
 import java.awt.*;
 
 public class Scania extends Vehicle {
-    private double flakAngle=0;
-    private double currentSpeed; //fungerar detta?
+    private int flakAngle=0;
     public Scania(){
-        super(4, 150 ,Color.blue,"Scania");
+        super(4, 450 ,Color.blue,"Scania");
     }
 
     /**
@@ -12,7 +11,7 @@ public class Scania extends Vehicle {
      * @param degree is the degree the flak should be lifted. It won't be able to lift the flak for more than 70 degrees above the horizontal.
      */
 
-    public void liftFlak(double degree){
+    public void liftFlak(int degree){
         if(this.getCurrentSpeed()==0)
             flakAngle=Math.min(flakAngle+degree,70);
     }
@@ -21,7 +20,7 @@ public class Scania extends Vehicle {
      *
      * @param degree is the degree the flak should be lowered. It won't be able to lower the flak for less than 0 degrees above the horizontal.
      */
-    public void lowerFlak(double degree){
+    public void lowerFlak(int degree){
         if(this.getCurrentSpeed()==0)
             flakAngle=Math.max(flakAngle-degree,0);
     }
@@ -30,11 +29,12 @@ public class Scania extends Vehicle {
      *
      * @param newSpeed the method will change the currentspeed only if the flak angle is 0 degrees.
      */
+    @Override
     public void setCurrentSpeed(double newSpeed){
         if(flakAngle==0){
-            if (newSpeed <= this.getEnginePower() && newSpeed >= 0)
-            this.setCurrentSpeed(newSpeed); //?
-            System.out.println("Mata in ett värde emellan 0 och motorkraft!");
+            if (newSpeed <= this.getEnginePower() && newSpeed >= 0) {
+                super.setCurrentSpeed(newSpeed); //?
+            }
         }
     }
     public double getFlakAngle(){

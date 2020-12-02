@@ -3,7 +3,7 @@ import java.awt.*;
 public class Saab95 extends Car{
     public boolean turboOn;
     public Saab95 () {
-        super(2, Color.red, 125, "Saab95");
+        super(2, Color.red, 100, "Saab95");
         turboOn = false;
     }
 
@@ -18,7 +18,7 @@ public class Saab95 extends Car{
     /**
      * How fast the car's speed changes.
      */
-@Override
+    @Override
     public double speedFactor(){
         double turbo = 1;
         if(turboOn) turbo = 1.3;

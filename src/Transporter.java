@@ -51,7 +51,6 @@ public abstract class Transporter<A extends Car> extends Vehicle implements Load
             System.out.println(aCar.getModelName() + "has been loaded.");
         } else
             System.out.println("Not even close or the flak is up");
-
     }
     /**
      *
@@ -90,6 +89,5 @@ public abstract class Transporter<A extends Car> extends Vehicle implements Load
         nr1.loadCars(volvo);
         System.out.println(""+nr1.getCarList());
     }
-
 }
 
