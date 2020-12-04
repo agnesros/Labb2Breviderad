@@ -11,6 +11,8 @@ import java.util.HashMap;
 public class DrawPanel <A extends Vehicle> extends JPanel{
 
     // Just a single image, TODO: Generalize
+
+    //View
     BufferedImage volvoImage, saabImage, scaniaImage;
 
     // To keep track of a the cars positions
@@ -18,9 +20,12 @@ public class DrawPanel <A extends Vehicle> extends JPanel{
     Point saabPoint = new Point((int) volvoPoint.getX(), (int) volvoPoint.getY()+100);
     Point scaniaPoint = new Point((int) volvoPoint.getX(),(int) saabPoint.getY()+100);
 
+
+    //modell
     private Map<String, Point> pointMap = new HashMap<String, Point>();
     // TODO: Make this genereal for all cars
 
+    //-||-
     void moveit(int x, int y, A vehicle){
         if(pointMap.containsKey(vehicle.getModelName())){
                 pointMap.get(vehicle.getModelName()).x = x;
@@ -32,7 +37,7 @@ public class DrawPanel <A extends Vehicle> extends JPanel{
     public DrawPanel(int x, int y) {
         this.setDoubleBuffered(true);
         this.setPreferredSize(new Dimension(x, y));
-        this.setBackground(Color.green);
+        this.setBackground(Color.ORANGE);
         // Print an error message in case file is not found with a try/catch block
         try {
             // You can remove the "pics" part if running outside of IntelliJ and
@@ -59,11 +64,12 @@ public class DrawPanel <A extends Vehicle> extends JPanel{
     // This method is called each time the panel updates/refreshes/repaints itself
     // TODO: Change to suit your needs.
     @Override
+
+    //view?!?!?!?!?! JAAA
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.drawImage(volvoImage, volvoPoint.x, volvoPoint.y, null);
         g.drawImage(saabImage, saabPoint.x, saabPoint.y, null);
         g.drawImage(scaniaImage, scaniaPoint.x, scaniaPoint.y, null);// see javadoc for more info on the parameters
-
     }
 }

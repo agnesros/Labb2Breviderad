@@ -87,17 +87,17 @@ public class CarView extends JFrame{
         // Make sure the frame exits when "x" is pressed
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
-
+              //View
    private void makePretty(){
         controlPanel.setBackground(Color.PINK);
         startButton.setBackground(Color.CYAN);
-        startButton.setForeground(Color.YELLOW);
+        startButton.setForeground(Color.BLACK);
         startButton.setPreferredSize(new Dimension(X/5-15,200));
         stopButton.setBackground(Color.red);
         stopButton.setForeground(Color.black);
         stopButton.setPreferredSize(new Dimension(X/5-15,200));
    }
-
+         //View
     private void setUpButtons(){
         controlPanel.setLayout(new GridLayout(2,4));
 
@@ -111,7 +111,7 @@ public class CarView extends JFrame{
         controlPanel.setPreferredSize(new Dimension((X/2)+4, 200));
         this.add(controlPanel);
     }
-
+    //controller
     private void addChangeListener(){
         gasSpinner.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
@@ -119,19 +119,21 @@ public class CarView extends JFrame{
             }
         });
     }
-
+   //view
     private void setUpGasPanel(){
         gasPanel.setLayout(new BorderLayout());
         gasPanel.add(gasLabel, BorderLayout.PAGE_START);
         gasPanel.add(gasSpinner, BorderLayout.PAGE_END);
     }
 
-
+     //view
     private void initiateCarview(String title){
         this.setTitle(title);
         this.setPreferredSize(new Dimension(X,Y));
         this.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
     }
+
+    //View Application?
     private void initiateGasControl(){
           SpinnerModel spinnerModel =
                         new SpinnerNumberModel(0, //initial value
@@ -142,7 +144,7 @@ public class CarView extends JFrame{
     }
 
 
-
+    //controller? eller? Kanske typ ? Säg bara ja eller nej, säg inte kanske. :( jaBRA :D ‹:o ?:DDDhihi
     private void addActionListeners(){
 
         gasButton.addActionListener(new ActionListener() {

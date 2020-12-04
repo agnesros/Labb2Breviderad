@@ -47,7 +47,7 @@ public class CarController {
     /* Each step the TimerListener moves all the cars in the list and tells the
     * view to update its images. Change this method to your needs.
     * */
-
+    //controller
     private class TimerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             for (Vehicle vehicle : vehicles) {
@@ -62,6 +62,7 @@ public class CarController {
         }
     }
 
+    //controller
     private void updateVehicle(Vehicle vehicle){
  //       System.out.println(""+vehicle.getModelName()+", "+vehicle.getX()+", "+vehicle.getY());
         vehicle.move();
@@ -72,6 +73,7 @@ public class CarController {
         frame.drawPanel.repaint();
     }
 
+    //Model? Kan vi fixa så att den inte är beroende av CarView?!?!!??!
     private boolean withinFrame(Vehicle vehicle){
         if(vehicle.getDirection()==Vehicle.NORTH||vehicle.getDirection()==Vehicle.WEST) {
             return frame.drawPanel.contains((int) vehicle.getX(), (int) vehicle.getY());
@@ -83,18 +85,19 @@ public class CarController {
 
     }  //TODO: förenkla?
 
-
-
+    // hör till model
     void stopAllEngines(){
         for(Vehicle car : vehicles)
             car.stopEngine();
     }
 
+    //Model
     void startAllEngines(){
         for(Vehicle car : vehicles)
             car.startEngine();
     }
 
+    //Model
     void turboOnSaab(){
         for(Vehicle car : vehicles){
             if(car.getModelName().equals("Saab95"))
@@ -102,18 +105,23 @@ public class CarController {
         }
     }
 
+    //Model
     void turboOffSaab(){
         for(Vehicle car : vehicles){
             if(car.getModelName().equals("Saab95"))
                 ((Saab95) car).setTurboOff();
         }
     }
+
+    //Model
     void liftflak(int amount){
         for(Vehicle vehicle:vehicles){
             if(vehicle.getModelName().equals("Scania"))
                 ((Scania) vehicle).liftFlak(amount);
         }
     }
+
+    //Model
     void lowerflak(int amount){
         for(Vehicle vehicle:vehicles){
             if(vehicle.getModelName().equals("Scania"))
@@ -121,7 +129,7 @@ public class CarController {
         }
     }
 
-    // Calls the gas method for each car once
+    // Calls the gas method for each car once, model
     void gas(int amount) {
         double gas = ((double) amount) / 100;
         for (Vehicle vehicle : vehicles) {
@@ -129,6 +137,7 @@ public class CarController {
         }
     }
 
+    //Model
     void brake(int amount){
         double brake=((double) amount)/100;
         for(Vehicle vehicle: vehicles){
