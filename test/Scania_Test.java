@@ -1,11 +1,12 @@
 import org.junit.Before;
 import org.junit.Test;
+import Cars.*;
 
 public class Scania_Test {
     Scania scania;
     @Before
     public void init(){
-        scania=new Scania();
+        scania=CarFactory.createScania();
     }
     @Test
     public void testLiftFlak(){

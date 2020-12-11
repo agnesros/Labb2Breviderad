@@ -1,13 +1,15 @@
 import org.junit.Before;
 import org.junit.Test;
+import Cars.*;
+
 public class Saab95_Test {
 
     Saab95 saab;
     Saab95 saab2;
     @Before
     public void init() {
-        saab = new Saab95();
-        saab2 = new Saab95();
+        saab = CarFactory.createSaab95();
+        saab2 = CarFactory.createSaab95();
     }
 
     @Test

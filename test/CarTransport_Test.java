@@ -1,15 +1,19 @@
+import Cars.CarFactory;
 import org.junit.Before;
 import org.junit.Test;
+import Cars.*;
+import Transporters.*;
 
 public class CarTransport_Test {
+
     CarTransport cartransport;
     Saab95 saab;
     Volvo240 volvo;
     @Before
     public void init(){
         cartransport=new CarTransport(10);
-        saab=new Saab95();
-        volvo=new Volvo240();
+        saab=CarFactory.createSaab95();
+        volvo=CarFactory.createVolvo240();
         cartransport.lowerFlak();
         cartransport.loadCars(saab);
     }
@@ -20,7 +24,7 @@ public class CarTransport_Test {
     @Test
     public void testUnloadCars(){
         cartransport.loadCars(volvo);
-        Saab95 saab2=new Saab95();
+        Saab95 saab2=CarFactory.createSaab95();
         cartransport.loadCars(saab2);
         cartransport.unloadCars(1);
         assert(!cartransport.contain(saab2));
