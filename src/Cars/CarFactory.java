@@ -11,5 +11,5 @@ public class CarFactory {
     public static Scania createScania() {
         return new Scania();
     }
-
+//    Passenger A=new Volvo240();
 }

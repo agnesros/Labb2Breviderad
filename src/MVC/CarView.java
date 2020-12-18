@@ -15,15 +15,15 @@ import java.awt.event.ActionListener;
  * TODO: Write more actionListeners and wire the rest of the buttons
  **/
 
-public class CarView extends JFrame{
+public class CarView extends JFrame implements CarObserver{
     private static final int X = 800;
     private static final int Y = 800;
 
-    // The controller member
-    CarController carC;
+    CarModel model;
 
-    DrawPanel drawPanel = new DrawPanel(X, Y-240);
-    ShowSpeed speedometer= new ShowSpeed(0, 545);
+    DrawPanel drawPanel;
+    ShowSpeed speedometer;
+
     JPanel controlPanel = new JPanel();
 
     JPanel gasPanel = new JPanel();
@@ -43,20 +43,25 @@ public class CarView extends JFrame{
     JButton startButton = new JButton("Start all cars");
     JButton stopButton = new JButton("Stop all cars");
 
-    // Constructor
-    public CarView(String framename, CarController cc){
-        super(framename);
-        this.carC = cc;
-        initComponents(framename);
 
+    public CarView(String framename, CarModel model){
+        super(framename);
+        this.model=model;
+        this.drawPanel = new DrawPanel(X, Y-240,model);
+        this.speedometer= new ShowSpeed(0, 545, model);
+        initComponents(framename);
+    }
+
+    @Override
+    public void actOnCarsChange() {
+        drawPanel.repaint();
     }
 
     // Sets everything in place and fits everything
     private void initComponents(String title) {
 
-        //initiates carview
         initiateCarview(title);
-        //attach drawPanel to it
+
         this.add(drawPanel);
 
         drawPanel.setLayout(null);
@@ -74,10 +79,6 @@ public class CarView extends JFrame{
 
         this.add(startButton);
         this.add(stopButton);
-
-
-        // This actionListener is for all the buttons only yes!
-      //  addActionListeners();
 
         // Make the frame pack all it's components by respecting the sizes if possible.
         this.pack();
@@ -148,19 +149,19 @@ public class CarView extends JFrame{
     void addActionListeners(){
         gasButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) { carC.model.gas(gasAmount); }
+            public void actionPerformed(ActionEvent e) { model.gas(gasAmount); }
         });
-
-        gasButton.addActionListener(e -> carC.model.gas(gasAmount));
-        brakeButton.addActionListener(e -> carC.model.brake(gasAmount));
-        stopButton.addActionListener(e->carC.model.stopAllEngines());
-        startButton.addActionListener(e->carC.model.startAllEngines());
-        turboOnButton.addActionListener(e->carC.model.turboOnSaab());
-        turboOffButton.addActionListener(e->carC.model.turboOffSaab());
-        lowerBedButton.addActionListener(e->carC.model.lowerflak(gasAmount));
-        liftBedButton.addActionListener(e->carC.model.liftflak(gasAmount));
-        addCarButton.addActionListener(e->carC.model.addCar());
-        removeCarButton.addActionListener(e->carC.model.removeCar());
+        gasButton.addActionListener(e -> model.gas(gasAmount));
+        brakeButton.addActionListener(e -> model.brake(gasAmount));
+        stopButton.addActionListener(e->model.stopAllEngines());
+        startButton.addActionListener(e->model.startAllEngines());
+        turboOnButton.addActionListener(e->model.turboOnSaab());
+        turboOffButton.addActionListener(e->model.turboOffSaab());
+        lowerBedButton.addActionListener(e->model.lowerflak(gasAmount));
+        liftBedButton.addActionListener(e->model.liftflak(gasAmount));
+        addCarButton.addActionListener(e->model.addCar());
+        removeCarButton.addActionListener(e->model.removeCar());
 
     }
+
 }

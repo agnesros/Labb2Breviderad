@@ -120,11 +120,33 @@ public abstract class Vehicle implements Movable {
         return this.getPos()[1];
     }
 
+    public boolean isNextPosValid(int x, int y){
+        if(this.getDirection()== Vehicle.NORTH) {
+            return checkParameter(y,(int)this.getY()-this.getCurrentSpeed());
+        }else if(this.getDirection()== Vehicle.SOUTH){
+            return checkParameter(y,(int)this.getY()+this.getCurrentSpeed());
+        }else if(this.getDirection()==Vehicle.EAST){
+            return checkParameter(x,(int)this.getX()+this.getCurrentSpeed());
+        }else
+            return checkParameter(x,(int)this.getX()-this.getCurrentSpeed());
+    }
+
+    private boolean checkParameter(int z, double nextPos) {
+        if(0<nextPos && nextPos<z) {
+            return true;
+        }
+        else
+            return false;
+    }
+
+    public void turnAround(){
+        this.turnLeft();
+        this.turnLeft();
+    }
+
     public void setPos(double [] newPos){ this.pos=newPos; }
 
     public String getModelName(){ return this.modelName; }
-
-    public void writePos(){ System.out.println("("+ pos[0]+","+pos[1]+")"); }
 
 }
 

@@ -3,6 +3,7 @@ package MVC;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import Cars.CarFactory;
@@ -12,11 +13,35 @@ public class CarModel<A extends Vehicle> {
     Map<String, Point> pointMap = new HashMap<String, Point>();
     Map<String, Double> speedMap = new HashMap<String, Double>();
     ArrayList<Vehicle> vehicles=new ArrayList<>();
-    void moveit(int x, int y, A vehicle){
-        if(pointMap.containsKey(vehicle.getModelName())){
-            pointMap.get(vehicle.getModelName()).x = x;
-            pointMap.get(vehicle.getModelName()).y = y;
+
+
+    List<CarObserver> observers = new ArrayList<>();
+
+
+    public void addCarObserver(CarObserver observer) {
+        this.observers.add(observer);
+    }
+
+     void placeWithinFrame(int x, int y){
+
+        for(Vehicle v: vehicles){
+            if(!v.isNextPosValid(x,y)) {
+                v.turnAround();
+            }
         }
+    }
+
+    void notifyObservers(){
+        for (CarObserver observer : this.observers) {
+            observer.actOnCarsChange();
+        }
+    }
+
+    void update(){
+        for(Vehicle v: vehicles){
+            v.move();
+        }
+        notifyObservers();
     }
 
     void stopAllEngines(){

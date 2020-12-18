@@ -12,20 +12,15 @@ import java.util.ArrayList;
 * modifying the model state and the updating the view.
  */
 
-public class CarController {
-    // member fields:
-
-    // The delay (ms) corresponds to 20 updates a sec (hz)
+public class CarController implements CarObserver {
     private final int delay = 50;
-    // The timer is started with a listener (see below) that executes the statements
-    // each step between delays.
     Timer timer = new Timer(delay, new TimerListener());
 
-    // The frame that represents this instance View of the MVC pattern
     CarView frame;
     CarModel model;
 
-    CarController(CarModel model){
+    CarController(CarModel model, CarView frame){
+        this.frame=frame;
         this.model=model;
     }
 
@@ -34,68 +29,23 @@ public class CarController {
     * */
     private class TimerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            ArrayList<Vehicle> vehicleList=model.vehicles;
-            for (Vehicle vehicle :  vehicleList) {
-                if(withinFrame(vehicle))
-                    updateVehicle(vehicle);
-                else {
-                    vehicle.turnLeft();
-                    vehicle.turnLeft();
-                    updateVehicle(vehicle);
-                }
-            }
+            model.update();
+
         }
     }
 
-    //controller
-    private void updateVehicle(Vehicle vehicle){
-
-        vehicle.move();
-        int x = (int) Math.round(vehicle.getX());
-        int y = (int) Math.round(vehicle.getY());
-
-
-        model.moveit(x,y,vehicle);
-        // repaint() calls the paintComponent method of the panel
-        frame.drawPanel.repaint();
-        update(model.vehicles);
+    @Override
+    public void actOnCarsChange() {
+        checkCarsOutsideFrame();
     }
 
-    private boolean withinFrame(Vehicle vehicle){
-        if(vehicle.getDirection()== Vehicle.NORTH||vehicle.getDirection()== Vehicle.WEST) {
-            return frame.drawPanel.contains((int) vehicle.getX(), (int) vehicle.getY());
-        }else if(vehicle.getDirection()== Vehicle.SOUTH){
-            return frame.drawPanel.contains((int) vehicle.getX(), (int)  vehicle.getY()+60);
-        }else
-            return frame.drawPanel.contains((int) vehicle.getX()+100,(int) vehicle.getY());
+    void checkCarsOutsideFrame() {
+        int q=(int)frame.drawPanel.saabImage.getHeight(); //ej generellt
+        int r=(int)frame.drawPanel.saabImage.getWidth();
+        int y=(int)frame.drawPanel.getPreferredSize().getHeight()-q;
+        int x=(int)frame.drawPanel.getPreferredSize().getWidth()-r;
+        model.placeWithinFrame(x,y);
 
     }
-
-    void update(ArrayList<Vehicle> vehicles){
-        updateSpeedList(vehicles);
-        updatePointList(vehicles);
-    }
-
-    void updateSpeedList(ArrayList<Vehicle> vehicles) {
-        model.speedMap.clear();
-        for(Vehicle e : vehicles) {
-            model.speedMap.put(e.getModelName(), e.getCurrentSpeed());
-        }
-        frame.speedometer.updateSpeed(model.speedMap);
-
-    }
-
-    void updatePointList(ArrayList<Vehicle>vehicles){
-        model.pointMap.clear();
-        for(Vehicle e: vehicles){
-            model.pointMap.put(e.getModelName(), new Point((int) e.getX(), (int) e.getY()));
-        }
-        frame.drawPanel.updateImages(model.pointMap);
-    }
-
-
-
-
-
 
 }
